@@ -23,90 +23,90 @@ import com.nw.spring.service.CategoryServiceImpl;
 //@RequestMapping("/books")
 public class BookController {
 
-	@Autowired
-	private CategoryServiceImpl categoryService;
+    @Autowired
+    private CategoryServiceImpl categoryService;
 
-	@Autowired
-	private BookServiceImpl bookService;
-	
-	@Autowired
-	private AuthorServiceImpl authorService;
+    @Autowired
+    private BookServiceImpl bookService;
 
-	@ModelAttribute
-	public void categoriesAttributes(Model model) {
-		model.addAttribute("categories", categoryService.findAll());
-		model.addAttribute("authors", authorService.findAllAuthor());
-	}
-	
-	@GetMapping("/")
-	public String findAll(Model model, @ModelAttribute("message") String message, @RequestParam(value = "category", required = false) String category) {
-		if (category != null && !category.isEmpty()) {
-			model.addAttribute("books", bookService.findByCategoryName(category));
-		} else {
-			model.addAttribute("books", bookService.findAll());
-		}
-		return "book/findAll";
-	}
+    @Autowired
+    private AuthorServiceImpl authorService;
 
-	@GetMapping("/create")
-	public String createBook(Book book) {
-		return "book/create";
-	}
+    @ModelAttribute
+    public void categoriesAttributes(Model model) {
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("authors", authorService.findAllAuthor());
+    }
 
-	@PostMapping("/create")
-	public String processCreateBook(@Valid Book book, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-		if (result.hasErrors()) {
-			return "book/create";
-		}
-		bookService.save(book);
-		redirectAttributes.addFlashAttribute("message", "Book has been created.");
-		return "redirect:/";
-	}
+    @GetMapping("/")
+    public String findAll(Model model, @ModelAttribute("message") String message, @RequestParam(value = "category", required = false) String category) {
+        if (category != null && !category.isEmpty()) {
+            model.addAttribute("books", bookService.findByCategoryName(category));
+        } else {
+            model.addAttribute("books", bookService.findAll());
+        }
+        return "book/findAll";
+    }
 
-	@GetMapping("/edit/{id}")
-	public String editBook(@PathVariable long id, Model model) throws ResourceNotFoundException {
-		Book book = bookService.findById(id).orElseThrow(() -> new ResourceNotFoundException());
-		model.addAttribute("book", book);
-		return "book/edit";
-	}
+    @GetMapping("/create")
+    public String createBook(Book book) {
+        return "book/create";
+    }
 
-	@PostMapping("/edit/{id}")
-	public String updateBook(@PathVariable long id, @Valid Book book, BindingResult result, RedirectAttributes redirectAttributes) throws ResourceNotFoundException {
-		if (result.hasErrors()) {
-			return "book/edit";
-		}
-		Book bk = bookService.findById(id).orElseThrow(() -> new ResourceNotFoundException());
-		bk.setId(book.getId());
-		bk.setCategory(book.getCategory());
-		bk.setDescription(book.getDescription());
-		bk.setEdition(book.getEdition());
-		bk.setTitle(book.getTitle());
-		bk.setAuthor(book.getAuthor());
-		bookService.save(bk);
-		redirectAttributes.addFlashAttribute("message", "Book with ID " + book.getId() + " has been updated!");
-		return "redirect:/";
-	}
+    @PostMapping("/create")
+    public String processCreateBook(@Valid Book book, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return "book/create";
+        }
+        bookService.save(book);
+        redirectAttributes.addFlashAttribute("message", "Book has been created.");
+        return "redirect:/";
+    }
 
-	@GetMapping("/view/{id}")
-	public String viewBookById(@PathVariable long id, Model model) throws ResourceNotFoundException {
-		Book book = bookService.findById(id).orElseThrow(() -> new ResourceNotFoundException());
-		model.addAttribute("book", book);
-		return "book/view";
-	}
+    @GetMapping("/edit/{id}")
+    public String editBook(@PathVariable long id, Model model) throws ResourceNotFoundException {
+        Book book = bookService.findById(id).orElseThrow(() -> new ResourceNotFoundException());
+        model.addAttribute("book", book);
+        return "book/edit";
+    }
 
-	@GetMapping("/delete/{id}")
-	public String delete(@PathVariable long id, Model model) throws ResourceNotFoundException {
-		Book book = bookService.findById(id).orElseThrow(() -> new ResourceNotFoundException());
-		model.addAttribute("book", book);
-		return "book/delete";
-	}
+    @PostMapping("/edit/{id}")
+    public String updateBook(@PathVariable long id, @Valid Book book, BindingResult result, RedirectAttributes redirectAttributes) throws ResourceNotFoundException {
+        if (result.hasErrors()) {
+            return "book/edit";
+        }
+        Book bk = bookService.findById(id).orElseThrow(() -> new ResourceNotFoundException());
+        bk.setId(book.getId());
+        bk.setCategory(book.getCategory());
+        bk.setDescription(book.getDescription());
+        bk.setEdition(book.getEdition());
+        bk.setTitle(book.getTitle());
+        bk.setAuthor(book.getAuthor());
+        bookService.save(bk);
+        redirectAttributes.addFlashAttribute("message", "Book with ID " + book.getId() + " has been updated!");
+        return "redirect:/";
+    }
 
-	@PostMapping("/delete/{id}")
-	public String processDeleteBook(@PathVariable long id, RedirectAttributes redirectAttributes)
-			throws ResourceNotFoundException {
-		//Book book = bookService.findById(id).orElseThrow(() -> new ResourceNotFoundException());
-		bookService.delete(id);
-		redirectAttributes.addFlashAttribute("message", "Book with ID " + id + " has been deleted.");
-		return "redirect:/";
-	}
+    @GetMapping("/view/{id}")
+    public String viewBookById(@PathVariable long id, Model model) throws ResourceNotFoundException {
+        Book book = bookService.findById(id).orElseThrow(() -> new ResourceNotFoundException());
+        model.addAttribute("book", book);
+        return "book/view";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable long id, Model model) throws ResourceNotFoundException {
+        Book book = bookService.findById(id).orElseThrow(() -> new ResourceNotFoundException());
+        model.addAttribute("book", book);
+        return "book/delete";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String processDeleteBook(@PathVariable long id, RedirectAttributes redirectAttributes)
+            throws ResourceNotFoundException {
+        //Book book = bookService.findById(id).orElseThrow(() -> new ResourceNotFoundException());
+        bookService.delete(id);
+        redirectAttributes.addFlashAttribute("message", "Book with ID " + id + " has been deleted.");
+        return "redirect:/";
+    }
 }

@@ -21,108 +21,108 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class Author {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotBlank(message = "Enter your name.")
-	private String name;
+    @NotBlank(message = "Enter your name.")
+    private String name;
 
-	@NotBlank(message = "Enter your phone number.")
-	private String phone;
+    @NotBlank(message = "Enter your phone number.")
+    private String phone;
 
-	@Email(message = "Enter valid email.")
-	@NotBlank(message = "Enter valid email.")
-	private String email;
+    @Email(message = "Enter valid email.")
+    @NotBlank(message = "Enter valid email.")
+    private String email;
 
-	@NotBlank(message = "Enter your address.")
-	private String address;
+    @NotBlank(message = "Enter your address.")
+    private String address;
 
-	@NotBlank(message = "Enter your N.R.C number.")
-	private String nRC;
+    @NotBlank(message = "Enter your N.R.C number.")
+    private String nRC;
 
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
-	// @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
-	// @Temporal(TemporalType.DATE)
-	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull(message = "Please select your date of birth.")
-	private Date dateOfBirth;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    // @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+    // @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull(message = "Please select your date of birth.")
+    private Date dateOfBirth;
 
-	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-	private List<Book> books;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Book> books;
 
-	public Author() {
+    public Author() {
 
-	}
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public String getnRC() {
-		return nRC;
-	}
+    public String getnRC() {
+        return nRC;
+    }
 
-	public void setnRC(String nRC) {
-		this.nRC = nRC;
-	}
+    public void setnRC(String nRC) {
+        this.nRC = nRC;
+    }
 
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
 
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
-	public List<Book> getBooks() {
-		return books;
-	}
+    public List<Book> getBooks() {
+        return books;
+    }
 
-	public void setBooks(List<Book> books) {
-		this.books = books;
-	}
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
 
-	public void addBook(Book book) {
-		if (books == null) {
-			books = new ArrayList<>();
-		}
-		books.add(book);
-	}
+    public void addBook(Book book) {
+        if (books == null) {
+            books = new ArrayList<>();
+        }
+        books.add(book);
+    }
 }

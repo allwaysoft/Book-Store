@@ -25,70 +25,69 @@ import com.nw.spring.service.AuthorServiceImpl;
 @RequestMapping("/author")
 public class AuthorController {
 
-	/*
+    /*
 	 * @Autowired private BookServiceImpl bookService;
-	 */
-	
-	@Autowired
-	private AuthorServiceImpl authorService;
-	
-	@InitBinder
-	public void init(WebDataBinder binder) {
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
-	}
-	
-	@GetMapping("/list")
-	public String getAllAuthor(Model model) {
-		model.addAttribute("authors", authorService.findAllAuthor());
-		//model.addAttribute("books", bookService.findAll());
-		return "author/find-all";
-	}
-	
-	@GetMapping("/showForm")
-	public String showAuthorForm(Model model) {
-		model.addAttribute("author", new Author());
-		return "author/add-author";
-	}
-	
-	@PostMapping("/add")
-	public String createAuthor(@Valid Author author, BindingResult result, RedirectAttributes redirectAttributes) {
-		if(result.hasErrors()) {
-			return "author/add-author";
-		}
-		authorService.save(author);
-		redirectAttributes.addFlashAttribute("message", "Author have been created.");
-		return "redirect:/author/list";
-	}
-	
-	@GetMapping("/view/{id}")
-	public String viewAuthorById(@PathVariable ("id") long id, Model model) {
-		Author author = authorService.findById(id);
-		model.addAttribute("author", author);
-		return "author/view_author";
-	}
-	
-	@GetMapping("/edit/{id}")
-	public String editAuthorById(@PathVariable ("id") long id, Model model) {
-		Author author = authorService.findById(id);
-		model.addAttribute("author", author);
-		return "author/edit_author";
-	}
-	
-	@PostMapping("/update/{id}")
-	public String editProcessAuthorById(@PathVariable ("id") long id, @Valid Author author, BindingResult result, RedirectAttributes redirectAttributes) {
-		if (result.hasErrors()) {
-			return "author/edit_author";
-		}
-		Author au = authorService.findById(id);
-		au.setId(author.getId());
-		au.setName(author.getName());
-		au.setAddress(author.getAddress());
-		au.setDateOfBirth(author.getDateOfBirth());
-		au.setEmail(author.getEmail());
-		au.setnRC(author.getnRC());
-		au.setPhone(author.getPhone());
-		authorService.save(au);
-		redirectAttributes.addFlashAttribute("message", "Author with ID " + id + " have been updated.");
-		return "redirect:/author/list";
-	}
+     */
+    @Autowired
+    private AuthorServiceImpl authorService;
+
+    @InitBinder
+    public void init(WebDataBinder binder) {
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
+    }
+
+    @GetMapping("/list")
+    public String getAllAuthor(Model model) {
+        model.addAttribute("authors", authorService.findAllAuthor());
+        //model.addAttribute("books", bookService.findAll());
+        return "author/find-all";
+    }
+
+    @GetMapping("/showForm")
+    public String showAuthorForm(Model model) {
+        model.addAttribute("author", new Author());
+        return "author/add-author";
+    }
+
+    @PostMapping("/add")
+    public String createAuthor(@Valid Author author, BindingResult result, RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return "author/add-author";
+        }
+        authorService.save(author);
+        redirectAttributes.addFlashAttribute("message", "Author have been created.");
+        return "redirect:/author/list";
+    }
+
+    @GetMapping("/view/{id}")
+    public String viewAuthorById(@PathVariable("id") long id, Model model) {
+        Author author = authorService.findById(id);
+        model.addAttribute("author", author);
+        return "author/view_author";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editAuthorById(@PathVariable("id") long id, Model model) {
+        Author author = authorService.findById(id);
+        model.addAttribute("author", author);
+        return "author/edit_author";
+    }
+
+    @PostMapping("/update/{id}")
+    public String editProcessAuthorById(@PathVariable("id") long id, @Valid Author author, BindingResult result, RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return "author/edit_author";
+        }
+        Author au = authorService.findById(id);
+        au.setId(author.getId());
+        au.setName(author.getName());
+        au.setAddress(author.getAddress());
+        au.setDateOfBirth(author.getDateOfBirth());
+        au.setEmail(author.getEmail());
+        au.setnRC(author.getnRC());
+        au.setPhone(author.getPhone());
+        authorService.save(au);
+        redirectAttributes.addFlashAttribute("message", "Author with ID " + id + " have been updated.");
+        return "redirect:/author/list";
+    }
 }
